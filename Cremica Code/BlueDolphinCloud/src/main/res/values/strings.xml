@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BDCloud</string>
+    <string name="sync_account_type">com.RMC.BDCloud</string>
+    <string name="content_authority">com.RMC.BDCloud.lib</string>
+</resources>

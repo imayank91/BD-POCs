@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/OTP_sent_to_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OTP sent to "
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/OTP_sent_to_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="*******"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/label_to_enter_mobile1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Enter the 6-digit OTP Received"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/first_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="16sp" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/second_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="16sp" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/third_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="16sp" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/fourth_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="16sp" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/fifth_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="16sp" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/sixth_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/having_trouble_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:text="Having trouble receiving the OTP?"
+        android:textSize="16sp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/click_here_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Click here to resend"
+        android:textColor="#74aadc"
+        android:textSize="16sp" />
+
+</LinearLayout>

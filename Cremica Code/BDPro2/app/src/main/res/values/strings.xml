@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">BD Pro</string>
+    <string name="orgId">af39bc69-1938-4149-b9f7-f101fd9baf73</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+
+    <string name="search">search</string>
+    <string name="action_notifications">notifications</string>
+
+    <string name="drawer_open"></string>
+
+    <string name="drawer_close"></string>
+
+    <string name="enter_notes_here">Enter Notes Here</string>
+    <string name="save_button_text">Save</string>
+    <string name="notes_title">Notes</string>
+    <string name="edit_button_text">Edit</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="submit_button_text">Submit</string>
+    <string name="assignment_details_title">IDXYZ</string>
+    <string name="create_assignment_title">Create Assignment</string>
+    <string name="MyDashboard_title">My Dashboard</string>
+    <string name="user_name_navigationDrawer">Hi Lorem Ipsum</string>
+    <string name="app_version_name">AppVersionName</string>
+    <string name="my_assignments_title">My Assignments</string>
+    <string name="enter_image_name_dialog">Enter Image Name</string>
+    <string name="image_name_hint">Image Name</string>
+    <string name="signature_title">Signature</string>
+
+    <string name="cardview_onMap_JobNumber"></string>
+
+
+    <string-array name="status_array">
+        <item>Available</item>
+        <item>Not Available</item>
+    </string-array>
+
+
+    <!-- Application strings -->
+    <string name="beacon_scanner">Beacon Scanner</string>
+    <string name="beacon_transmitter">Beacon Transmitter</string>
+    <string name="logo">Beacon logo</string>
+
+    <!-- List item strings -->
+    <string name="list_item_distance">Distance: %1$sm</string>
+    <string name="list_item_major_minor">Maj, Min: %1$s.%2$s</string>
+
+    <!-- Menu item strings -->
+    <string name="stop_scanning">Stop scanning</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+
+    <!-- Bluetooth -->
+    <string name="bluetooth_not_enabled">Bluetooth not enabled</string>
+    <string name="please_enable_bluetooth">Please enable bluetooth in settings and restart the app
+        to work properly.
+    </string>
+
+    <!--Detail page strings-->
+    <string name="beacon_detail">Beacon details</string>
+    <string name="detail_uuid">UUID:</string>
+    <string name="detail_minor">Minor:</string>
+    <string name="detail_major">Major:</string>
+    <string name="detail_distance">Distance:</string>
+    <string name="detail_bluetooth_address">BLT address:</string>
+    <string name="detail_manufacturer">Bluetooth name:</string>
+    <string name="detail_rssi">Rssi:</string>
+    <string name="detail_service_uuid">Service UUID:</string>
+    <string name="detail_tx_power">TX power:</string>
+    <string name="distance">%1$sm</string>
+
+    <!-- Content descriptions -->
+    <string name="circle_button_content_desc">Circle button</string>
+    <string name="ring_pulse_desc">Pulse</string>
+    <string name="stop_button_content_desc">Stop button</string>
+    <string name="scan_switch_label">Scanning</string>
+    <string name="transmit_switch_label">Transmit</string>
+    <string name="stop_circle_desc">Stop circle</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Settings Header Strings -->
+    <string name="pref_header_scanning">Scanning</string>
+
+    <!-- Scanning settings -->
+    <string name="pref_scan_tracking_age_summary">The amount of time a detected beacon stays in memory.</string>
+    <string name="pref_scan_tracking_age_title">Tracking age(ms)</string>
+    <string name="pref_scan_period_summary">How many times per second a new scan is started</string>
+    <string name="pref_scan_period_title">Scan period(ms)</string>
+    <string name="pref_between_scan_period_summary">The amount of time between a scan period</string>
+    <string name="pref_between_scan_period_title">Between scan period(ms)</string>
+    <string name="pref_header_transmit">Transmitting</string>
+    <string name="transmitting_not_supported">Transmitting not supported</string>
+    <string name="transmitting_not_supported_message">Transmitting as a beacon is not supported on your
+        device.
+    </string>
+    <string name="pref_transmit_beacon_uuid">UUID(id1)</string>
+    <string name="pref_transmit_major">Major(id2)</string>
+    <string name="pref_transmit_minor">Minor(id3)</string>
+    <string name="pref_transmit_beacon_name_summary">Bluetooth name of beacon</string>
+    <string name="pref_transmit_power">TX-Power</string>
+    <string name="pref_transmit_beacon_uuid_summary">Select a pre-defined UUID of beacon</string>
+    <string name="pref_transmit_power_summary">Signal strength of beacon</string>
+    <string name="pref_transmit_beacon_advertisement_summary">Signal frequency in Hz</string>
+    <string name="pref_transmit_beacon_advertisement">Signal frequency(Higher is faster)</string>
+    <string name="app_intro">Intro</string>
+    <string name="beacon_detail_close_content_desc">Beacon detail close button</string>
+    <string name="beacon_detail_save_content_desc">Save logs</string>
+    <string name="pref_log_summary">Log scan activity and save it to a csv file located in the downloads folder</string>
+    <string name="advanced_settings">Advanced settings</string>
+    <string name="pref_use_beacon_formats">Use custom beacon formats</string>
+    <string name="pref_use_format_summary">Enable settings for custom beacon formats</string>
+    <string name="pref_beacon_format_summary">Select scannable beacon formats</string>
+    <string name="pref_beacon_format">Beacon formats</string>
+
+    <string-array name="statusarr">
+        <item>I am in</item>
+        <item>I am out</item>
+    </string-array>
+</resources>

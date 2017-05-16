@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container_acitvityassignment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize">
+
+                <ImageButton
+                    android:id="@+id/back_button_assgn_details"
+                    android:layout_width="30dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/back" />
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/assignment_details_title"
+                    android:textColor="#212121"
+                    android:textSize="18dp" />
+
+
+                <Button
+                    android:id="@+id/submit_assignment_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@android:color/transparent"
+                    android:text="@string/submit_button_text"
+                    android:textColor="@color/fab_color_blue"
+                    android:textSize="15sp" />
+
+            </android.support.v7.widget.Toolbar>
+
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/fab_color_blue"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/fab_color_blue"
+                app:tabTextAppearance="@style/MyCustomTextAppearance"
+                app:tabTextColor="#212121" />
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp">
+
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <include layout="@layout/footer_assignmentdetails" />
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
