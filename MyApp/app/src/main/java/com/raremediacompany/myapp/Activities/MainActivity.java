@@ -1,6 +1,11 @@
 package com.raremediacompany.myapp.Activities;
 
+import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -10,15 +15,18 @@ import android.widget.Button;
 
 import com.RMC.BDCloud.Android.BDCloudUtils;
 import com.RMC.BDCloud.Android.BDPreferences;
+import com.RMC.BDCloud.BLE.BeaconScannerService;
 import com.RMC.BDCloud.RealmDB.Model.RMCCheckin;
 import com.RMC.BDCloud.RealmDB.Model.RMCUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.raremediacompany.myapp.App;
+import com.raremediacompany.myapp.Helpers.AlarmReceiver;
 import com.raremediacompany.myapp.Holders.CheckedInHolder;
 import com.raremediacompany.myapp.R;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import io.realm.Realm;
@@ -42,8 +50,11 @@ public class MainActivity extends BaseActivity {
         button = (Button) findViewById(R.id.check_In_button);
         userName = (AppCompatTextView) findViewById(R.id.textView_name);
         messageTV = (AppCompatTextView) findViewById(R.id.textView);
+//        MainActivity.this.startService(new Intent(MainActivity.this, BeaconScannerService.class));
 
         BDCloudUtils.startSync(getApplicationContext());
+//        BDCloudUtils.checkNetworkTime(getApplicationContext());
+//        scheduleAlarm(getApplicationContext());
 
 //        messageTV.setTypeface(mFontRegular);
 
@@ -68,6 +79,9 @@ public class MainActivity extends BaseActivity {
                 MainActivity.this.finish();
             }
         });
+
+
+
 
         realm = BDCloudUtils.getRealmBDCloudInstance();
 
@@ -100,7 +114,7 @@ public class MainActivity extends BaseActivity {
                 rmcCheckin.setCheckinCategory("Data");
                 rmcCheckin.setCheckinType("Data");
                 rmcCheckin.setCheckinId(UUID.randomUUID().toString());
-                rmcCheckin.setOrganizationId(user.getOrgId());
+                rmcCheckin.setOrganizationId(user .getOrgId());
                 rmcCheckin.setTime(new Date());
                 realm.copyToRealmOrUpdate(rmcCheckin);
             }
@@ -108,5 +122,28 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+//    public static void scheduleAlarm(Context context) {
+//        // Construct an intent that will execute the AlarmReceiver
+//        Intent intent = new Intent(context, AlarmReceiver.class);
+//        // Create a PendingIntent to be triggered when the alarm goes off
+//        final PendingIntent pIntent = PendingIntent.getBroadcast(context, AlarmReceiver.REQUEST_CODE,
+//                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        // Setup periodic alarm every every half hour from this point onwards
+//        long firstMillis = System.currentTimeMillis(); // alarm is set right away
+//        AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+//        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            alarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,firstMillis,pIntent);
+//        }else {
+//            alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
+//                    300000, pIntent);
+//        }
+//
+//
+//
+//    }
 
 }

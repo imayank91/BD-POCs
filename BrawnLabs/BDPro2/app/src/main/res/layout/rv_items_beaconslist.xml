@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/quility_sitelist_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="166dp"
+    android:clickable="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/parentLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:id="@+id/title1_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="T3:Indoor"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/title2_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Domestic Departure Check-in Hall"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/title3_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Backlit"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+
+        <!--<TextView
+            android:id="@+id/title4_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6'2'' *17'9''"
+            android:textColor="@color/text_color_white"
+            android:textSize="15sp" />-->
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#73AADA</color>
+    <color name="assignment_text">#212121</color>
+    <color name="fab_color_blue">#73AADA</color>
+    <color name="photo_placeholder">#ccc</color>
+    <color name="grey_line">#BDBDBD</color>
+    <color name="orange_dark">#E64A19</color>
+    <color name="blue_dark">#00537F</color>
+    <color name="yellow">#F5A623</color>
+
+
+    <color name="colorPrimaryDarkSettings">#D32F2F</color>
+
+    <color name="colorAccentSettings">#FF5252</color>
+    <color name="colorBackground">#212121</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#616161</color>
+</resources>

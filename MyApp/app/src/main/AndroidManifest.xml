@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.raremediacompany.myapp">
 
+    <uses-permission-sdk-23
+        tools:node="removeAll" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -47,8 +52,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.OTPActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f0aaf2ee8d27e99c365e18607fa74a36127ef24b" />
     </application>
 
 </manifest>

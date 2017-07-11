@@ -7,7 +7,7 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/DevBranch/bluedolphin-new-android/BlueDolphinCloud" />
+            <option value="$PROJECT_DIR$/../BlueDolphinCloud" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

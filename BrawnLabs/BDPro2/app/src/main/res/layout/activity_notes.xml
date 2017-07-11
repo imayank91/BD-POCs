@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize">
+
+
+                <ImageButton
+                    android:id="@+id/back_button_notes"
+                    android:layout_width="35dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/back" />
+
+                <Button
+                    android:id="@+id/edit_notes_button"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@android:color/transparent"
+                    android:text="@string/edit_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/fab_color_blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/notes_title"
+                    android:textColor="#212121"
+                    android:textSize="15dp"
+
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/save_notes_button"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@android:color/transparent"
+                    android:text="@string/save_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/fab_color_blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+            </android.support.v7.widget.Toolbar>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/scrollView_layout">
+
+            <EditText
+                android:id="@+id/makeNote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/enter_notes_here" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -40,6 +40,7 @@ public class CheckOutActivity extends BaseActivity {
         realm = BDCloudUtils.getRealmBDCloudInstance();
         bdPreferences = new BDPreferences(getApplicationContext());
         preferenceforApp = new PreferenceforApp(CheckOutActivity.this);
+        //MainActivity.scheduleAlarm(getApplicationContext());
 
         try {
             final RMCUser user = realm.where(RMCUser.class).equalTo("isActive", true).findFirst();

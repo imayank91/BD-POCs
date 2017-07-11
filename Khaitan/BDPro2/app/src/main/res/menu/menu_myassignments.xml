@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/search"
+        android:orderInCategory="0"
+        android:title="@string/search"
+        android:visible="false"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/action_notification_assignments"
+        android:icon="@drawable/notifications"
+        android:title="@string/action_notifications"
+        android:visible="false"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/action_notification"
+        android:icon="@drawable/notifications_black"
+        android:title="@string/action_notifications"
+        app:showAsAction="always" />
+
+
+</menu>
+
+    <!-- app:actionViewClass="android.support.v7.widget.SearchView" -->

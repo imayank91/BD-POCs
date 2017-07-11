@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.RMC.BDCloud.Android.BDCloudUtils;
 import com.RMC.BDCloud.Android.RequestCallback;
+import com.RMC.BDCloud.BLE.BeaconScannerService;
 import com.raremediacompany.myapp.Helpers.PreferenceforApp;
 import com.raremediacompany.myapp.R;
 

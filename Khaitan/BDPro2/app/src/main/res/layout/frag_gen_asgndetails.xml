@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="60dp">
+
+
+    <RelativeLayout
+        android:id="@+id/layoutWith_NoMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp">
+
+        <LinearLayout
+            android:id="@+id/start_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/start_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start : "
+                android:textColor="#212121"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DD/MM/YY "
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/enddate_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/start_layout"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/end_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End :   "
+                android:textColor="#212121"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DD/MM/YY "
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/location_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enddate_layout"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/address" />
+
+            <TextView
+                android:id="@+id/address_assignmentDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="Dadar (W), Mumbai"
+                android:textColor="#74aadc"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/contact_person_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/location_layout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:text="Contact Person"
+            android:textColor="#212121"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/contact_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_person_tag"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:text="Sachin Shetty"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/phone_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_person_name"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/call" />
+
+            <TextView
+                android:id="@+id/contact_phoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+91-8897767575"
+                android:textColor="@color/fab_color_blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/email_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_layout"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mail" />
+
+            <TextView
+                android:id="@+id/contact_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sshetty@gmail.com"
+                android:textColor="@color/fab_color_blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/instructions_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_layout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:text="Instructions"
+            android:textColor="#212121"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/assignment_details_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/instructions_tag"
+            android:layout_marginLeft="15dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            android:textSize="14sp" />
+
+
+
+        <LinearLayout
+            android:id="@+id/gallery_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/assignment_details_instructions"
+            android:layout_marginTop="30dp">
+
+            <include layout="@layout/gallery_thumbnail" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+        <include
+            layout="@layout/mapview"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:padding="5dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</ScrollView>

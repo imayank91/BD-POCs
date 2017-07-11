@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.RMC.BDCloud.Android.BDCloudUtils;
 import com.raremediacompany.myapp.Helpers.PreferenceforApp;
 import com.raremediacompany.myapp.R;
 
