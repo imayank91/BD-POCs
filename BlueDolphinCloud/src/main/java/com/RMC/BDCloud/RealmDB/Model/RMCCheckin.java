@@ -31,8 +31,8 @@ public class RMCCheckin extends RealmObject {
     public String checkinType;
     public String assignmentId;
     public String imageUrl;
-    public RealmList<RMCImageUris> imageUri;
-    public RealmList<RMCImageNames> imageName;
+    public String imageUri;
+    public String imageName;
     public String aIds;
     public RealmList<RMCBeacon> rmcBeacons;
 
@@ -133,21 +133,21 @@ public class RMCCheckin extends RealmObject {
         this.imageUrl = imageUrl;
     }
 
-//    public String getImageUri() {
-//        return imageUri;
-//    }
-//
-//    public void setImageUri(String imageUri) {
-//        this.imageUri = imageUri;
-//    }
+    public String getImageUri() {
+        return imageUri;
+    }
 
-//    public String getImageName() {
-//        return imageName;
-//    }
-//
-//    public void setImageName(String imageName) {
-//        this.imageName = imageName;
-//    }
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public RealmList<RMCBeacon> getRmcBeacons() {
         return rmcBeacons;
@@ -165,20 +165,5 @@ public class RMCCheckin extends RealmObject {
         this.aIds = aIds;
     }
 
-    public void setImageUri(RealmList<RMCImageUris> imageUri) {
-        this.imageUri = imageUri;
-    }
-
-    public RealmList<RMCImageUris> getImageUri() {
-        return imageUri;
-    }
-
-    public RealmList<RMCImageNames> getImageName() {
-        return imageName;
-    }
-
-    public void setImageName(RealmList<RMCImageNames> imageName) {
-        this.imageName = imageName;
-    }
 }
 

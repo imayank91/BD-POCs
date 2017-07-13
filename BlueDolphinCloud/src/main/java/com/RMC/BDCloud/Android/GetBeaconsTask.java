@@ -57,6 +57,7 @@ public class GetBeaconsTask implements RequestCallback {
             loc = location.getLatitude() + "," + location.getLongitude();
         } else {
             loc = lat + "," + lon;
+
         }
 
         String URL = Constants.BASE_URL + "organisation/" + user.getOrgId() +

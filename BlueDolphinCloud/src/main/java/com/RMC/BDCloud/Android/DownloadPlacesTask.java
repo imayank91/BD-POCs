@@ -53,7 +53,7 @@ public class DownloadPlacesTask implements RequestCallback {
         String latitude = "" + preferences.getTransientLatitude();
         String longitude = "" + preferences.getTransientLongitude();
 
-        String url = Constants.BASE_URL + "organisation/" + organizationId + "/place?vicinity=" + latitude + "," + longitude + "&maxDistance=100";
+        String url = Constants.BASE_URL + "organisation/" + organizationId + "/place?vicinity=" + latitude + "," + longitude + "&maxDistance=25";
 
         Log.i("DownloadPlacesTask ", " " + url);
 
@@ -112,7 +112,7 @@ public class DownloadPlacesTask implements RequestCallback {
                     realm.close();
 
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
         }

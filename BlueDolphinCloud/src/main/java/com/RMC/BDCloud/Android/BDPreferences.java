@@ -24,6 +24,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putFloat("latitude", value);
+        editor.apply();
         editor.commit();
     }
 
@@ -35,6 +36,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putFloat("longitude", value);
+        editor.apply();
         editor.commit();
     }
 
@@ -46,6 +48,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putFloat("accuracy", value);
+        editor.apply();
         editor.commit();
     }
 
@@ -57,6 +60,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putFloat("altitude", value);
+        editor.apply();
         editor.commit();
     }
 
@@ -68,6 +72,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("firebaseToken", value);
+        editor.apply();
         editor.commit();
     }
 
@@ -79,6 +84,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firebaseRegistered", value);
+        editor.apply();
         editor.commit();
     }
 
@@ -86,6 +92,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("beaconsLastSeen", value);
+        editor.apply();
         editor.commit();
 
     }
@@ -97,6 +104,7 @@ public class BDPreferences {
     public void setOrganisationId(String orgId) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("organisationId", orgId);
+        editor.apply();
         editor.commit();
     }
 
@@ -108,6 +116,7 @@ public class BDPreferences {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("beaconsLastCheckin", value);
+        editor.apply();
         editor.commit();
 
     }

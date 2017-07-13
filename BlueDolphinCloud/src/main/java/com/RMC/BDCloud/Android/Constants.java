@@ -12,17 +12,17 @@ public class Constants {
 
    // public static String BASE_URL = "https://swhuyj3x0d.execute-api.ap-southeast-1.amazonaws.com/bd/live/";
 
-
-
     //  DEV URL
-    public static String BASE_URL = "https://kxjakkoxj3.execute-api.ap-southeast-1.amazonaws.com/bd/dev/";
+  public static String BASE_URL = "https://kxjakkoxj3.execute-api.ap-southeast-1.amazonaws.com/bd/dev/";
 
-//  public static String BASE_URL = "https://dqxr67yajg.execute-api.ap-southeast-1.amazonaws.com/bd/staging/";
-
+//   public static String BASE_URL = "https://dqxr67yajg.execute-api.ap-southeast-1.amazonaws.com/bd/staging/";
 
  //    public static String BASE_URL = "https://dqxr67yajg.execute-api.ap-southeast-1.amazonaws.com/bd/staging/";
 
 //    public static String BASE_URL = "https://01ly64puzb.execute-api.ap-south-1.amazonaws.com/bd/live/";
+
+//    public static String BASE_URL = "https://0uvkmcic37.execute-api.ap-south-1.amazonaws.com/bd/live/";
+
 
     public static String USER_ID = "userId";
     public static String GRANT_TYPE = "grantType";

@@ -1,15 +1,20 @@
 package com.RMC.BDCloud.Sync;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +37,10 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +49,8 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static com.RMC.BDCloud.Android.BDCloudUtils.DEBUG_LOG;
 import static com.RMC.BDCloud.Android.BDCloudUtils.INFO_LOG;
@@ -54,7 +65,7 @@ public class SyncLocation extends Service implements
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 500;
 
     /**
      * The fastest rate for active location updates. Exact. Updates will never be more frequent
@@ -92,11 +103,23 @@ public class SyncLocation extends Service implements
     protected Location mCurrentLocation;
     public static boolean isEnded = false;
 
+    Timer timer;
+
+    static long tStart;
+    long tEnd;
+
+    // String fileName = "LocationLogFile";
+    String fileNamePath = "Android/data/com.RMC.BDHcl/logs";
+    String fileName = "LocationLogFile";
+    String myLog = null;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
+        buildGoogleApiClient();
     }
 
     @Nullable
@@ -114,9 +137,28 @@ public class SyncLocation extends Service implements
         if (DEBUG_LOG) {
             Log.d(TAG, "Service init...");
         }
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                timer = new Timer();
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // Your database code here
+                        tStart = System.currentTimeMillis();
+                        Log.i("Timer Start time in ", " While creating Checking " + tStart);
+                    }
+                }, 0, 200000);
+
+                return null;
+            }
+        }.execute();
+
+
         isEnded = false;
         mRequestingLocationUpdates = false;
-        buildGoogleApiClient();
+        // buildGoogleApiClient();
         if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
 
             startLocationUpdates();
@@ -141,15 +183,108 @@ public class SyncLocation extends Service implements
     @Override
     public void onLocationChanged(Location location) {
 
+        tEnd = System.currentTimeMillis();
 
-        Log.i("Sync Location", "Acc" + location.getAccuracy());
-        if (location != null && location.getAccuracy() <28) {
+        long tDelta = tEnd - tStart;
+
+        String time = String.valueOf(new Date());
+
+        Log.i("Sync Location", " Acc " + location.getAccuracy()+ " And Time - "+time);
+
+        Log.i("Sync Location", " TDelta "+tDelta);
+        Log.i("Sync Location", " TStart "+tStart);
+        Log.i("Sync Location", " Tend "+tEnd);
+
+        myLog = "In OnLocationChanged Sync Location  Acc " + location.getAccuracy()+ " And Time - "+time+", ";
+
+        if (location!= null && location.getAccuracy() <30) {
+
+            try {
+                if(timer!=null) {
+                    timer.cancel();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            myLog = myLog + " Inside IF Sync Location Accuracy below 100m " + location.getAccuracy()+ " And Time - "+time;
             stopLocationUpdates();
-            Log.i("Sync Location", "Accuracy" + location.getAccuracy());
+            Log.i("Sync Location", " Accuracy below 100m " + location.getAccuracy()+ " And Time - "+time);
+            mCurrentLocation = location;
+            updateUI();
+
+        }
+        else if(location!=null && tDelta > 2*60*1000){
+            try {
+                if(timer!=null) {
+                    timer.cancel();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            myLog = myLog + " Inside IF Sync Location Any Accuracy above 100m " + location.getAccuracy()+ " And Time - "+time;
+            stopLocationUpdates();
+            Log.i("Sync Location", " Any Accuracy above 100m " + location.getAccuracy()+ " And Time - "+time);
             mCurrentLocation = location;
             updateUI();
         }
-//        stopLocationUpdates();
+
+
+        storeLogs(myLog);
+
+    }
+
+    private void storeLogs(String myLog) {
+
+
+        File logFilePath = new File(Environment.getExternalStorageDirectory() + "/" +fileNamePath);
+        File logFile = new File(logFilePath, fileName+".txt");
+
+        if(logFile.exists()){
+
+
+            double bytes = logFile.length();
+            double kilobytes = (bytes / 1024);
+            double megabytes = (kilobytes / 1024);
+
+            if(megabytes>2){
+                logFile.delete();
+            }
+        }
+
+        //Android/data/com.RMC.BDPro/checkins/
+
+        if (!logFilePath.exists())  {
+            Log.d("Directory created ", "Directory created ");
+            logFilePath.mkdirs();
+
+        }
+
+        if(!logFile.exists()){
+            try  {
+                Log.d("File created ", "File created ");
+                logFile.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            //BufferedWriter for performance, true to set append to file flag
+            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+
+            buf.write(myLog + "\r\n");
+            //buf.append(message);
+            buf.newLine();
+            //  buf.flush();
+            buf.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -214,7 +349,6 @@ public class SyncLocation extends Service implements
         // Sets the fastest rate for active location updates. This interval is exact, and your
         // application will never receive updates faster than this value.
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
-
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
@@ -266,12 +400,17 @@ public class SyncLocation extends Service implements
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        myLog = myLog + " Service Destroyed";
+
     }
 
     private void createTransientCheckin(Location location) {
 
         final String checkinId = UUID.randomUUID().toString();
         Log.v("createTransientCheckin", checkinId);
+
+        myLog = myLog + " CheckingId "+ checkinId;
 
         Realm realm = BDCloudUtils.getRealmBDCloudInstance();
         float lat = (float) location.getLatitude();
@@ -280,7 +419,7 @@ public class SyncLocation extends Service implements
         float alt = (float) location.getAltitude();
 
         if (lat != 0 && lon != 0) {
-            BDPreferences prefs1  = new BDPreferences(getApplicationContext());
+            BDPreferences prefs1 = new BDPreferences(getApplicationContext());
             double latitude = Double.parseDouble(String.valueOf(prefs1.getTransientLatitude()));
             double longitude = Double.parseDouble(String.valueOf(prefs1.getTransientLongitude()));
             Location localLoction = new Location("localLoction");
@@ -288,9 +427,9 @@ public class SyncLocation extends Service implements
             localLoction.setLongitude(longitude);
 
             float metres = localLoction.distanceTo(location);
-
-            final JsonObject object  = new JsonObject();
-            object.addProperty("distance",""+metres);
+            Log.i("LOCATION CHECKIN", " METRES" + metres);
+            final JsonObject object = new JsonObject();
+            object.addProperty("distance", "" + metres);
 
             final RMCUser user = realm.where(RMCUser.class).equalTo("isActive", true).findFirst();
             final BDPreferences prefs = new BDPreferences(getApplicationContext());
@@ -301,29 +440,74 @@ public class SyncLocation extends Service implements
 
             Log.i(TAG, "Lat prefs" + prefs.getTransientLatitude() + "Long prefs" + prefs.getTransientLongitude());
 
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    // Add a checkin
-                    if (user != null) {
-                        RMCCheckin rmcCheckin = new RMCCheckin();
-                        rmcCheckin.setLatitude(String.valueOf(prefs.getTransientLatitude()));
-                        rmcCheckin.setLongitude(String.valueOf(prefs.getTransientLongitude()));
-                        rmcCheckin.setAccuracy(String.valueOf(prefs.getTransientAccuracy()));
-                        rmcCheckin.setAltitude(String.valueOf(prefs.getTransientAltitude()));
-                        rmcCheckin.setCheckinDetails(object.toString());
-                        rmcCheckin.setAssignmentId("");
-                        rmcCheckin.setCheckinCategory("Transient");
-                        rmcCheckin.setCheckinType("Location");
-                        rmcCheckin.setCheckinId(checkinId);
-                        rmcCheckin.setOrganizationId(user.getOrgId());
-                        rmcCheckin.setTime(new Date());
-                        rmcCheckin.setCheckinDetails(new JSONObject().toString());
-                        realm.copyToRealmOrUpdate(rmcCheckin);
-                    }
-                }
-            });
+            RealmResults<RMCCheckin> rmcCheckins = realm.where(RMCCheckin.class).findAll();
+            rmcCheckins = rmcCheckins.sort("time", Sort.DESCENDING);
 
+            long difference = 0;
+
+            if(rmcCheckins != null && rmcCheckins.size() > 0) {
+
+                Log.i("RMC Checkins Time", "" + rmcCheckins.get(0).getTime());
+
+                difference =  new Date().getTime() - rmcCheckins.get(0).getTime().getTime();
+                Log.i(" Time Difference ", "Time Difference " + difference);
+
+                myLog = myLog + " checkin with time difference "+ difference;
+
+            }else {
+
+                myLog = myLog + " first checkin when rmcCheckin's size is 0 ";
+
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        // Add a checkin
+                        if (user != null) {
+                            RMCCheckin rmcCheckin = new RMCCheckin();
+                            rmcCheckin.setLatitude(String.valueOf(prefs.getTransientLatitude()));
+                            rmcCheckin.setLongitude(String.valueOf(prefs.getTransientLongitude()));
+                            rmcCheckin.setAccuracy(String.valueOf(prefs.getTransientAccuracy()));
+                            rmcCheckin.setAltitude(String.valueOf(prefs.getTransientAltitude()));
+                            rmcCheckin.setCheckinDetails(object.toString());
+                            rmcCheckin.setAssignmentId("");
+                            rmcCheckin.setCheckinCategory("Transient");
+                            rmcCheckin.setCheckinType("Location");
+                            rmcCheckin.setCheckinId(checkinId);
+                            rmcCheckin.setOrganizationId(user.getOrgId());
+                            rmcCheckin.setTime(new Date());
+                            realm.copyToRealmOrUpdate(rmcCheckin);
+                        }
+                    }
+                });
+            }
+
+            if(difference >  5*60*1000) {
+
+                myLog = myLog + " Checkin created when time difference > 5 mins";
+
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        // Add a checkin
+                        if (user != null) {
+                            RMCCheckin rmcCheckin = new RMCCheckin();
+                            rmcCheckin.setLatitude(String.valueOf(prefs.getTransientLatitude()));
+                            rmcCheckin.setLongitude(String.valueOf(prefs.getTransientLongitude()));
+                            rmcCheckin.setAccuracy(String.valueOf(prefs.getTransientAccuracy()));
+                            rmcCheckin.setAltitude(String.valueOf(prefs.getTransientAltitude()));
+                            rmcCheckin.setCheckinDetails(object.toString());
+                            rmcCheckin.setAssignmentId("");
+                            rmcCheckin.setCheckinCategory("Transient");
+                            rmcCheckin.setCheckinType("Location");
+                            rmcCheckin.setCheckinId(checkinId);
+                            rmcCheckin.setOrganizationId(user.getOrgId());
+                            rmcCheckin.setTime(new Date());
+                            realm.copyToRealmOrUpdate(rmcCheckin);
+                        }
+                    }
+                });
+
+            }
             if (INFO_LOG) {
                 Log.i(TAG, "Location checkin successfully created");
             }
@@ -332,17 +516,17 @@ public class SyncLocation extends Service implements
             task.downloadPlaces();
 
 
-                handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i("starting on start timer", "starting on start stimer");
-                        startLocationUpdates();
-                    }
-                }, 30000);
+            AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+            alarm.set(
+                    alarm.RTC_WAKEUP,
+                    System.currentTimeMillis() + (1000 * 60 * 3),
+                    PendingIntent.getService(this, 0, new Intent(this, SyncLocation.class), 0)
+            );
+
+            stopSelf();
 
         }
 
-    }
 
+    }
 }

@@ -200,7 +200,7 @@ public class DownloadAssignmentTask implements RequestCallback {
                         final JSONArray assigneeDataArray = associationIds.getJSONArray("assigneeData");
                         JsonParser jsonParser = new JsonParser();
                         JsonObject assignmentDetails = (JsonObject) jsonParser.parse(docs.getJSONObject("assignmentDetails").toString());
-                        String placeId = assignmentDetails.get("placeId").getAsString();
+//                        String placeId = assignmentDetails.get("placeId").getAsString();
                         final String assignerUserId = assignerData.getString("userId");
                         String assignerOrgId = assignerData.getString("organizationId");
                         String assignerPrivelege = assignerData.getString("privelege");
@@ -251,7 +251,7 @@ public class DownloadAssignmentTask implements RequestCallback {
                         assgnmnt.setAssigneeData(assigneList);
                         assgnmnt.setAssignerData(rmcAssigner);
                         assgnmnt.setLocation(rmcLocation);
-                        assgnmnt.setPlaceId(placeId);
+//                        assgnmnt.setPlaceId(placeId);
 
 
                         if (assignerUserId.equals(assigneeUserId)) {
@@ -295,7 +295,7 @@ public class DownloadAssignmentTask implements RequestCallback {
                         });
 
                         if (assignmentStatus.equalsIgnoreCase("Assigned") || assignmentStatus.equalsIgnoreCase("Created")) {
-                            //updateAssignmentStatus(realm);
+                            updateAssignmentStatus(realm);
                         }
 
                         if (INFO_LOG == true) {

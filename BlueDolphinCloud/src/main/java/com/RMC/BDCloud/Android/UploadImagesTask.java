@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.RMC.BDCloud.RealmDB.Model.RMCCheckin;
-import com.RMC.BDCloud.RealmDB.Model.RMCImageNames;
-import com.RMC.BDCloud.RealmDB.Model.RMCImageUris;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -21,7 +19,6 @@ import org.json.JSONObject;
 import java.io.File;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
@@ -45,7 +42,7 @@ public class UploadImagesTask implements RequestCallback {
 
     public void uploadToS3() {
 
-        if (BDCloudUtils.DEBUG_LOG) {
+        if(BDCloudUtils.DEBUG_LOG) {
             Log.d("UploadImagesTask", "Photo upload started");
         }
         realm = BDCloudUtils.getRealmBDCloudInstance();
@@ -62,52 +59,45 @@ public class UploadImagesTask implements RequestCallback {
         transferUtility = BDCloudUtils.getTransferService(context, s3);
 
         for (RMCCheckin checkin : photoResult) {
-            RealmList<RMCImageUris> imageUri = checkin.getImageUri();
-            RealmList<RMCImageNames> imageNames = checkin.getImageName();
-            if (imageUri != null) {
-                for (int i = 0; i < imageUri.size(); i++) {
-                    File file = new File(imageUri.get(i).getImageUri());
-                    imageName = imageNames.get(i).getImageName();
-                    final TransferObserver observer = transferUtility.upload(
-                            Constants.BUCKET_NAME,     /* The bucket to upload to */
-                            imageName,    /* The key for the uploaded object */
-                            file        /* The file where the data to upload exists */
-                    );
+            File file = new File(checkin.getImageUri());
+            imageName = checkin.getImageName();
+            final TransferObserver observer = transferUtility.upload(
+                    Constants.BUCKET_NAME,     /* The bucket to upload to */
+                    imageName,    /* The key for the uploaded object */
+                    file        /* The file where the data to upload exists */
+            );
 
-                    observer.setTransferListener(new TransferListener() {
-                        @Override
-                        public void onStateChanged(int id, TransferState state) {
-                            if (state.equals(TransferState.COMPLETED)) {
+            observer.setTransferListener(new TransferListener() {
+                @Override
+                public void onStateChanged(int id, TransferState state) {
+                    if (state.equals(TransferState.COMPLETED)) {
 
-                                if (BDCloudUtils.INFO_LOG) {
-                                    Log.i("UploadImagesTask", "uploadToS3 - Transfer complete " + observer.getKey());
-                                }
-
-                                JSONObject object = new JSONObject();
-                                try {
-                                    object.put("imageName", observer.getKey());
-                                    onResponseReceived(object, true, "Successfully Uploaded", Constants.uploadPhotoCallback);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-
+                        if (BDCloudUtils.INFO_LOG) {
+                            Log.i("UploadImagesTask", "uploadToS3 - Transfer complete " + observer.getKey());
                         }
 
-                        @Override
-                        public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-
+                        JSONObject object = new JSONObject();
+                        try {
+                            object.put("imageName", observer.getKey());
+                            onResponseReceived(object, true, "Successfully Uploaded", Constants.uploadPhotoCallback);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                        @Override
-                        public void onError(int id, Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    });
 
                 }
-            }
+
+                @Override
+                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+
+                }
+
+                @Override
+                public void onError(int id, Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
 
         }
         realm.close();
@@ -119,34 +109,24 @@ public class UploadImagesTask implements RequestCallback {
             if (BDCloudUtils.DEBUG_LOG) {
                 Log.d("UploadImagesTask", "onResponseReceived");
             }
-            String imageURI = null;
             realm = BDCloudUtils.getRealmBDCloudInstance();
             try {
                 String imageName = object.getString("imageName");
                 final String url = Constants.CLOUDFRONT_URL + imageName;
-                final RealmResults<RMCCheckin> result = realm.where(RMCCheckin.class).equalTo("imageName.imageNames", imageName)
+                final RealmResults<RMCCheckin> result = realm.where(RMCCheckin.class).equalTo("imageName", imageName)
                         .findAll();
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         result.get(0).setImageUrl(url);
-                        //result.get(0).setCheckinType("Data");
+
+                    //    result.get(0).setCheckinType("Data");
                         realm.copyToRealmOrUpdate(result);
                     }
                 });
 
-                if (result != null) {
-                    RealmList<RMCImageNames> imageNames = result.get(0).getImageName();
-
-                    for (int j = 0; j < imageNames.size(); j++) {
-                        if (imageNames.get(j).getImageName().equalsIgnoreCase(imageName)) {
-                            imageURI = result.get(0).getImageUri().get(j).getImageUri();
-                        }
-                    }
-                }
-
                 if (requestCallback != null) {
-                    requestCallback.onResponseReceived(null, true, imageURI, Constants.deleteImageCallback);
+                    requestCallback.onResponseReceived(null, true, result.get(0).getImageUri(), Constants.deleteImageCallback);
                 }
 
                 realm.close();

@@ -37,7 +37,6 @@ import com.RMC.BDCloud.Holders.BeaconHolder;
 import com.RMC.BDCloud.Holders.CheckinDataHolder;
 import com.RMC.BDCloud.R;
 import com.RMC.BDCloud.RealmDB.Migration;
-import com.RMC.BDCloud.RealmDB.Model.RMCAssignee;
 import com.RMC.BDCloud.RealmDB.Model.RMCAssignment;
 import com.RMC.BDCloud.RealmDB.Model.RMCBeacon;
 import com.RMC.BDCloud.RealmDB.Model.RMCCheckin;
@@ -107,19 +106,19 @@ public class BDCloudUtils {
     public static void init(@NonNull Context context, @NonNull String secretKey, @NonNull String orgId,
                             @NonNull String firstName, String lastName, @NonNull String email, String mobile) {
 
-        if (context == null) {
+        if(context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        if (secretKey == null || secretKey.equalsIgnoreCase("")) {
+        if(secretKey == null || secretKey.equalsIgnoreCase("")) {
             throw new IllegalArgumentException("secretKey can't be null or empty");
         }
-        if (orgId == null || orgId.equalsIgnoreCase("")) {
+        if(orgId == null || orgId.equalsIgnoreCase("")) {
             throw new IllegalArgumentException("orgId can't be null or empty");
         }
-        if (firstName == null || firstName.equalsIgnoreCase("")) {
+        if(firstName == null || firstName.equalsIgnoreCase("")) {
             throw new IllegalArgumentException("firstName can't be null or empty");
         }
-        if (email == null || email.equalsIgnoreCase("")) {
+        if(email == null || email.equalsIgnoreCase("")) {
             throw new IllegalArgumentException("email can't be null or empty");
         }
 //        Realm.init(context);
@@ -220,13 +219,8 @@ public class BDCloudUtils {
 
         holder.organizationId = rmcUser.getOrgId();
         holder.assignmentId = assignment.getAssignmentId();
-
         ArrayList<String> assigneeIds = new ArrayList<>();
-        if (assignment.getAssigneeData() != null && assignment.getAssigneeData().size() > 0) {
-            for (RMCAssignee assignee : assignment.getAssigneeData()) {
-                assigneeIds.add(assignee.getUserId());
-            }
-        }
+        assigneeIds.add(assignment.getAssigneeData().get(0).getUserId());
         holder.assigneeIds = assigneeIds;
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");        /// STRING TO DATE
@@ -255,9 +249,15 @@ public class BDCloudUtils {
         try {
             JsonParser parser = new JsonParser();
             JsonObject object = parser.parse(assignment.getAssignmentDetails()).getAsJsonObject();
-//            String versionName = BDCloudUtils.getPackageInfo(BDCloudUtils.setContext(null)).versionName;
-//            object.addProperty("versionName", versionName);
-//            object.addProperty("userAgent", "Android");
+            try {
+                String versionName = BDCloudUtils.getPackageInfo(BDCloudUtils.setContext(null)).versionName;
+                object.addProperty("versionName", versionName);
+                object.addProperty("userAgent", "Android");
+            }catch (Exception e) {
+                if(e != null) {
+                    e.printStackTrace();
+                }
+            }
             holder.assignmentDetails = object;
         } catch (Exception e) {
             e.printStackTrace();
@@ -282,9 +282,17 @@ public class BDCloudUtils {
         try {
             JsonParser parser = new JsonParser();
             JsonObject object = parser.parse(rmcCheckin.getCheckinDetails()).getAsJsonObject();
-            //String versionName = BDCloudUtils.getPackageInfo(BDCloudUtils.setContext(null)).versionName;
-            //  object.addProperty("versionName", versionName);
+
+            try{
+                String versionName = BDCloudUtils.getPackageInfo(BDCloudUtils.setContext(null)).versionName;
+                object.addProperty("versionName", versionName);
+            }catch (Exception e){
+                if(e != null) {
+                    e.printStackTrace();
+                }
+            }
             holder.checkinDetails = object;
+
 
             if (rmcCheckin.getCheckinId().equalsIgnoreCase("8eff79cc-91e3-4232-a940-4d491d08ef02")) {
                 Log.i("Checkin details", object.toString());
@@ -424,7 +432,7 @@ public class BDCloudUtils {
 
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
-        Bitmap bmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+        Bitmap bmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), null, true);
 
         FileOutputStream fOut;
         try {
@@ -450,7 +458,7 @@ public class BDCloudUtils {
     }
 
 
-    public static void sendNotification(@NonNull String messageBody, @NonNull Context context, Class<?> object, @NonNull int notificationId,
+    public static void sendNotification(@NonNull  String messageBody, @NonNull Context context, Class<?> object,@NonNull int notificationId,
                                         String intentName) {
 
         Log.i("sendNotification", messageBody);
@@ -464,7 +472,7 @@ public class BDCloudUtils {
 
             pendingIntent = PendingIntent.getActivity(context, 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
-        } else if (intentName != null && !intentName.equalsIgnoreCase("")) {
+        }else if(intentName != null && !intentName.equalsIgnoreCase("")) {
             Intent intent = new Intent(intentName);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |

@@ -29,7 +29,7 @@ public class AssignmentDataHolder {
     public String altitude;
     public String accuracy;
     public String placeId;
-    public ArrayList<String> imageUrls;
+    public String imageUrl;
     public JsonObject assignmentDetails;
 
 }

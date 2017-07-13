@@ -133,7 +133,7 @@ public class BDCloudSyncAdapter extends AbstractThreadedSyncAdapter implements R
 
         if (!beaconManager.checkAvailability()) {
 //            requestBluetooth();
-            BluetoothAdapter.getDefaultAdapter().enable();
+//            BluetoothAdapter.getDefaultAdapter().enable();
         }
 
 
@@ -149,20 +149,20 @@ public class BDCloudSyncAdapter extends AbstractThreadedSyncAdapter implements R
 
         Log.i("hourofday", "" + hourofday);
 
-        if (hourofday > 7 && hourofday < 21) {
-            if (!isMyServiceRunning(BeaconScannerService.class, context)) {
-                Log.i("inside if", "BeaconScannerService");
-                context.startService(new Intent(context, BeaconScannerService.class));
-            }
-        }
+//        if (hourofday > 7 && hourofday < 21) {
+//            if (!isMyServiceRunning(BeaconScannerService.class, context)) {
+//                Log.i("inside if", "BeaconScannerService");
+//                context.startService(new Intent(context, BeaconScannerService.class));
+//            }
+//        }
         RMCUser result = realm.where(RMCUser.class).
                 equalTo("isActive", true).
                 findFirst();
-//        if (prefs.isFirebaseRegistered() == false && result != null) {
-//            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
-//            String token = prefs.getFirebaseToken();
-//            service.sendRegistrationToServer(token, context);
-//        }
+        if (prefs.isFirebaseRegistered() == false && result != null) {
+            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
+            String token = prefs.getFirebaseToken();
+            service.sendRegistrationToServer(token, context);
+        }
         GetBeaconsTask task = new GetBeaconsTask(context, this);
         task.getBeacons();
 

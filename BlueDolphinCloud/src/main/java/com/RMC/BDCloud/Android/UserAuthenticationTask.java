@@ -78,6 +78,7 @@ public class UserAuthenticationTask implements RequestCallback {
     @Override
     public void onResponseReceived(JSONObject object, boolean status, String message, int type) {
         realm = BDCloudUtils.getRealmBDCloudInstance();
+        boolean flag = false;
 
         if (type == Constants.Oauth2Callback) {
             if (status == true) {
@@ -104,7 +105,7 @@ public class UserAuthenticationTask implements RequestCallback {
                         if (!orgID.equalsIgnoreCase(orgId)) {
                             continue;
                         }
-
+                        flag = true;
                         final String token = arr.getJSONObject(i).getString("token");
                         final String refreshToken = arr1.getJSONObject(0).getString("token");
                         userId = arr.getJSONObject(i).getString("userId");
@@ -167,6 +168,10 @@ public class UserAuthenticationTask implements RequestCallback {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                if(flag == false) {
+                    requestCallback.onResponseReceived(object, false, "Number not found", type);
+                }
             } else {
 
                 try {
@@ -174,7 +179,7 @@ public class UserAuthenticationTask implements RequestCallback {
                     String msg = obj.getString("message");
 
                     if (msg == null) {
-                        msg = "";
+                        msg = "Wrong OTP..Please try again";
                     }
                     requestCallback.onResponseReceived(obj, false, msg, type);
 

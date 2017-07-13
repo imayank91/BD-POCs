@@ -19,7 +19,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -53,7 +52,7 @@ public class CreateAssignmentTask implements RequestCallback {
                 (context, CreateAssignmentTask.this);
 
         realm = BDCloudUtils.getRealmBDCloudInstance();
-        RMCUser user = realm.where(RMCUser.class).equalTo("isActive", true).findFirst();
+        RMCUser user = realm.where(RMCUser.class).equalTo("isActive",true).findFirst();
         String organizationId = user.getOrgId();
         String oauthToken = user.getToken();
         String userId = user.getUserId();
@@ -75,7 +74,7 @@ public class CreateAssignmentTask implements RequestCallback {
             object.put("authorization", oauthToken);
             object.put("userId", userId);
 
-            Log.i("ass payload", "" + obj.toString());
+            Log.i("ass payload",""+obj.toString());
 
             if (assignmentHolder != null) {
                 bdCloudPlatformService.executeHttpPost(url, obj, context, Constants.createAssignmentCallback, object, null);
@@ -89,7 +88,7 @@ public class CreateAssignmentTask implements RequestCallback {
 
     public void saveLocalCopytoDB() {
         realm = BDCloudUtils.getRealmBDCloudInstance();
-        RMCUser user = realm.where(RMCUser.class).equalTo("isActive", true).findFirst();
+        RMCUser user = realm.where(RMCUser.class).equalTo("isActive",true).findFirst();
         String userId = user.getUserId();
 
         final RMCLocation location = new RMCLocation();
@@ -98,29 +97,18 @@ public class CreateAssignmentTask implements RequestCallback {
         location.setAccuracy(assignmentHolder.data.get(0).accuracy);
         location.setAltitude(assignmentHolder.data.get(0).altitude);
 
-//        final RMCAssignee assignee = new RMCAssignee();
-//        assignee.setOrganisationId(assignmentHolder.data.get(0).organizationId);
-//        assignee.setUserId(userId);
+        final RMCAssignee assignee = new RMCAssignee();
+        assignee.setOrganisationId(assignmentHolder.data.get(0).organizationId);
+        assignee.setUserId(userId);
         final RealmList<RMCAssignee> assigneesList = new RealmList<>();
-
-        ArrayList<String> assigneeIDs = assignmentHolder.data.get(0).assigneeIds;
-
-        if (assigneeIDs != null && assigneeIDs.size() > 0) {
-            for (String str : assigneeIDs) {
-                final RMCAssignee assignee = new RMCAssignee();
-                assignee.setOrganisationId(assignmentHolder.data.get(0).organizationId);
-                assignee.setUserId(str);
-                assigneesList.add(assignee);
-            }
-        }
-
+        assigneesList.add(assignee);
 
         final RMCAssigner assigner = new RMCAssigner();
         assigner.setOrganisationId(assignmentHolder.data.get(0).organizationId);
         assigner.setUserId(userId);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        format.setTimeZone(TimeZone.getTimeZone("GMT"));
+       format.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         try {
             assignmentDeadlineInDateFormat = format.parse(assignmentHolder.data.get(0).assignmentDeadline);
