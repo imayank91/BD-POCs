@@ -13,9 +13,11 @@ public class Constants {
    // public static String BASE_URL = "https://swhuyj3x0d.execute-api.ap-southeast-1.amazonaws.com/bd/live/";
 
     //  DEV URL
-  public static String BASE_URL = "https://kxjakkoxj3.execute-api.ap-southeast-1.amazonaws.com/bd/dev/";
+//  public static String BASE_URL = "https://kxjakkoxj3.execute-api.ap-southeast-1.amazonaws.com/bd/dev/";
 
-//   public static String BASE_URL = "https://dqxr67yajg.execute-api.ap-southeast-1.amazonaws.com/bd/staging/";
+
+//test 1 org staging
+   public static String BASE_URL = "https://dqxr67yajg.execute-api.ap-southeast-1.amazonaws.com/bd/staging/";
 
  //    public static String BASE_URL = "https://dqxr67yajg.execute-api.ap-southeast-1.amazonaws.com/bd/staging/";
 
