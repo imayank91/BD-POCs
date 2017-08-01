@@ -1,7 +1,9 @@
 package com.RareMediaCompany.BDPro.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
@@ -9,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +68,7 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
 
     private BDCloudPlatformServiceAndroid bdCloudPlatformServiceAndroid;
     private PreferenceforApp prefs;
-    private String mobileNo, otp, orgId;
+    private String mobileNo, mOTP, orgId;
 
 
     @Override
@@ -93,8 +96,18 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
         clickHereLabel.setTypeface(mFontRegular);
         havingTrouble.setTypeface(mFontRegular);
 
-        firstOtp.requestFocus();
+        setEditTextListeners();
 
+//        firstOtp.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                openKeyBoard(firstOtp);
+//            }
+//        }, 400);
+    }
+
+
+    private void setEditTextListeners() {
         firstOtp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -103,30 +116,16 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int length1 = firstOtp.getText().length();
-                if (length1 == 1) {
-                    secondOtp.requestFocus();
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        secondOtp.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KEYCODE_DEL) {
-                    firstOtp.requestFocus();
+                if (s.length() == 1) {
+                    secondOtp.requestFocus();
                 }
-                return false;
             }
         });
-
-
         secondOtp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -135,32 +134,16 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int length2 = secondOtp.getText().length();
-                if (length2 == 1) {
-                    thirdOtp.requestFocus();
-                }
 
             }
-
 
             @Override
             public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        thirdOtp.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KEYCODE_DEL) {
-                    secondOtp.requestFocus();
+                if (s.length() == 1) {
+                    thirdOtp.requestFocus();
                 }
-                return false;
             }
         });
-
-
         thirdOtp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -169,32 +152,16 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int length3 = thirdOtp.getText().length();
-                if (length3 == 1) {
-                    fourthOtp.requestFocus();
-                }
-
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        fourthOtp.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KEYCODE_DEL) {
-                    thirdOtp.requestFocus();
+                if (s.length() == 1) {
+                    fourthOtp.requestFocus();
                 }
-                return false;
             }
         });
-
-
         fourthOtp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -203,30 +170,16 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int length4 = fourthOtp.getText().length();
-                if (length4 == 1) {
-                    fifthOtp.requestFocus();
-                }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        fifthOtp.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KEYCODE_DEL) {
-                    fourthOtp.requestFocus();
+                if (s.length() == 1) {
+                    fifthOtp.requestFocus();
                 }
-                return false;
             }
         });
-
-
         fifthOtp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -235,61 +188,101 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int length5 = fifthOtp.getText().length();
-                if (length5 == 1) {
-                    sixthOtp.requestFocus();
-                } else {
 
-                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    sixthOtp.requestFocus();
+                }
+            }
+        });
+        sixthOtp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    closeKeyBoard();
+                    checkInput();
+                }
             }
         });
 
-        sixthOtp.setOnKeyListener(new View.OnKeyListener() {
+
+        setBackPressAction(secondOtp, firstOtp);
+        setBackPressAction(thirdOtp, secondOtp);
+        setBackPressAction(fourthOtp, thirdOtp);
+        setBackPressAction(fifthOtp, fourthOtp);
+        setBackPressAction(sixthOtp, fifthOtp);
+
+    }
+
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return conMgr.getActiveNetworkInfo() != null
+                && conMgr.getActiveNetworkInfo().isAvailable()
+                && conMgr.getActiveNetworkInfo().isConnected();
+    }
+
+    private void checkInput() {
+        mOTP = firstOtp.getText().toString() +
+                secondOtp.getText().toString() +
+                thirdOtp.getText().toString() +
+                fourthOtp.getText().toString() +
+                fifthOtp.getText().toString() +
+                sixthOtp.getText().toString();
+        if (mOTP.matches("\\d{6}")) {
+            if (isInternetAvailable(getApplicationContext())) {
+                // input is valid
+                progressDialog.setMessage("Verifying...");
+                progressDialog.show();
+                UserAuthenticationTask task = new UserAuthenticationTask(getApplicationContext(), this, "true", "custom",
+                        mobileNo, mOTP, false, null, getResources().getString(R.string.orgId));
+                task.getOauthToken();
+            } else {
+                showSnackbar(sixthOtp, "Please check your internet connection");
+            }
+        } else {
+//            clearTextAndShowMessage(getResString(R.string.invalid_otp_code_input));
+//            openKeyBoard(etOtpInput1);
+        }
+    }
+
+
+    private void setBackPressAction(EditText editText, final View nextFocusable) {
+        editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KEYCODE_DEL) {
-                    fifthOtp.requestFocus();
+                    EditText e = (EditText) v;
+                    e.setText("");
+//                    v.clearFocus();
+                    v.post(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            if (nextFocusable instanceof EditText) {
+                                ((EditText) nextFocusable).setText("");
+                            }
+                            nextFocusable.requestFocus();
+                        }
+                    });
+                    return true;
                 }
                 return false;
             }
         });
-
-
-        sixthOtp.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                progressDialog.setMessage("Verifying");
-                progressDialog.show();
-
-
-                otp = firstOtp.getText().toString() + secondOtp.getText().toString() +
-                        thirdOtp.getText().toString() + fourthOtp.getText().toString() +
-                        fifthOtp.getText().toString() + sixthOtp.getText().toString();
-
-                UserAuthenticationTask task = new UserAuthenticationTask(OTPActivity.this, OTPActivity.this, "true", "custom",
-                        mobileNo, otp, false, null, getResources().getString(R.string.orgId));
-                task.getOauthToken();
-            }
-        });
-
     }
-
 
     @Override
 
@@ -301,15 +294,30 @@ public class OTPActivity extends BaseActivity implements RequestCallback {
                 Toast.makeText(OTPActivity.this, "Activation Successful", Toast.LENGTH_SHORT).show();
                 prefs.setUserActivated(true);
                 prefs.setUserId(mobileNo);
-                prefs.setPassword(otp);
+                prefs.setPassword(mOTP);
                 Intent intent = new Intent(OTPActivity.this, MyDashboardActivity.class);
                 startActivity(intent);
                 finish();
                 Login.login.finish();
             } else {
                 progressDialog.cancel();
-                Toast.makeText(OTPActivity.this, message, Toast.LENGTH_SHORT).show();
-                finish();
+
+                firstOtp.setText("");
+                secondOtp.setText("");
+                thirdOtp.setText("");
+                fourthOtp.setText("");
+                fifthOtp.setText("");
+                sixthOtp.setText("");
+                showSnackbar(firstOtp, message);
+                firstOtp.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        openKeyBoard(firstOtp);
+                    }
+                }, 1500);
+
+//                Toast.makeText(OTPActivity.this, message, Toast.LENGTH_SHORT).show();
+
             }
         }
     }

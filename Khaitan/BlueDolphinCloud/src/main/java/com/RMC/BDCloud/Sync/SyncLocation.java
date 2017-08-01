@@ -318,7 +318,6 @@ public class SyncLocation extends Service implements
                         rmcCheckin.setCheckinId(checkinId);
                         rmcCheckin.setOrganizationId(user.getOrgId());
                         rmcCheckin.setTime(new Date());
-                        rmcCheckin.setCheckinDetails(new JSONObject().toString());
                         realm.copyToRealmOrUpdate(rmcCheckin);
                     }
                 }

@@ -41,7 +41,7 @@ public class GpsLocationReceiver extends BroadcastReceiver {
 
             } else {
                 JsonObject object = new JsonObject();
-                object.addProperty("gpsStatus",true);
+                object.addProperty("gpsStatus",false);
                 createGPSStatusCheckin(context, object.toString());
                 Log.d("GpsLocationReceiver","gps off");
 

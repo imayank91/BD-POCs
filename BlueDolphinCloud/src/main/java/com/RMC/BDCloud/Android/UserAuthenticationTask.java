@@ -184,6 +184,7 @@ public class UserAuthenticationTask implements RequestCallback {
                     requestCallback.onResponseReceived(obj, false, msg, type);
 
                 } catch (Exception e) {
+                    requestCallback.onResponseReceived(null, false, "Wrong OTP..Please try again", type);
                     if (e != null) {
                         e.printStackTrace();
                     }

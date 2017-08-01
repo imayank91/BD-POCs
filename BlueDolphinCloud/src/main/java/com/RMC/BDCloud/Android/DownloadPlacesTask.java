@@ -94,13 +94,12 @@ public class DownloadPlacesTask implements RequestCallback {
                     final RMCCheckin checkin = realm.where(RMCCheckin.class).equalTo("checkinId", checkinId).findFirst();
                     Gson gson = new GsonBuilder().create();
 
-                    String json = gson.toJson(placeIds);
-//                    JsonParser parser = new JsonParser();
-//
-//                    JsonObject placeIds =  parser.parse(json).getAsJsonObject();
-                    JsonObject checkinObject = new JsonObject();
-                    checkinObject.add("placeIds",placeIds);
-                    final String checkinJSON = gson.toJson(checkinObject);
+                    String json = gson.toJson(checkin.getCheckinDetails());
+                    JsonParser parser = new JsonParser();
+
+                    JsonObject checkinObj =  parser.parse(json).getAsJsonObject();
+                    checkinObj.add("placeIds",placeIds);
+                    final String checkinJSON = gson.toJson(checkinObj);
 
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
