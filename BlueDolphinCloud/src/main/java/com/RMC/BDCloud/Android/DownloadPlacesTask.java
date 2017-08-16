@@ -30,6 +30,7 @@ public class DownloadPlacesTask implements RequestCallback {
     private String checkinId;
     private Realm realm;
     private JsonArray placeIds;
+    private RMCCheckin checkin;
 
     public DownloadPlacesTask(Context context, RequestCallback requestCallback, String checkinId) {
         this.requestCallback = requestCallback;
@@ -77,6 +78,7 @@ public class DownloadPlacesTask implements RequestCallback {
     public void onResponseReceived(JSONObject object, boolean status, String message, int type) {
         if (type == Constants.downloadPlaceCallback) {
             if (status == true) {
+                Gson gson = new GsonBuilder().create();
                 placeIds = new JsonArray();
                 try {
                     JSONObject data = object.getJSONObject("data");
@@ -91,27 +93,49 @@ public class DownloadPlacesTask implements RequestCallback {
                     }
 
                     realm = BDCloudUtils.getRealmBDCloudInstance();
-                    final RMCCheckin checkin = realm.where(RMCCheckin.class).equalTo("checkinId", checkinId).findFirst();
-                    Gson gson = new GsonBuilder().create();
+                    checkin = realm.where(RMCCheckin.class).equalTo("checkinId", checkinId).findFirst();
 
-                    String json = gson.toJson(checkin.getCheckinDetails());
-                    JsonParser parser = new JsonParser();
+                    if(checkin != null) {
+                        String json = gson.toJson(checkin.getCheckinDetails());
+                        JsonParser parser = new JsonParser();
 
-                    JsonObject checkinObj =  parser.parse(json).getAsJsonObject();
-                    checkinObj.add("placeIds",placeIds);
-                    final String checkinJSON = gson.toJson(checkinObj);
+                        JsonObject checkinObj = parser.parse(json).getAsJsonObject();
+                        checkinObj.add("placeIds", placeIds);
+                        final String checkinJSON = gson.toJson(checkinObj);
 
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            checkin.setCheckinDetails(checkinJSON);
-                            realm.copyToRealmOrUpdate(checkin);
-                        }
-                    });
-                    realm.close();
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                checkin.setCheckinDetails(checkinJSON);
+                                realm.copyToRealmOrUpdate(checkin);
+                            }
+                        });
+
+                    }
 
                 } catch (Exception e) {
+                    try {
+                        if(checkin != null &&checkin.getCheckinDetails() != null ) {
+                            JSONObject jsonObject = new JSONObject(checkin.getCheckinDetails());
+                            JsonObject gsonObject = (JsonObject)new JsonParser().parse(jsonObject.toString());
+                            gsonObject.add("placeIds",placeIds);
+                            final String checkinJSON = gson.toJson(gsonObject);
+
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    checkin.setCheckinDetails(checkinJSON);
+                                    realm.copyToRealmOrUpdate(checkin);
+                                }
+                            });
+                            Log.i("jsonObject", "jsonObject");
+                        }
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
                     e.printStackTrace();
+                } finally {
+                    realm.close();
                 }
             }
         }

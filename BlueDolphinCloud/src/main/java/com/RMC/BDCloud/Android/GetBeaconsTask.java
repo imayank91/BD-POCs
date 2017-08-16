@@ -167,6 +167,7 @@ public class GetBeaconsTask implements RequestCallback {
 
                     }
                 }
+                realm.close();
                 if (requestCallback != null) {
                     requestCallback.onResponseReceived(object, true, "Successfully saved", Constants.getBeaconsCallback);
                 }
